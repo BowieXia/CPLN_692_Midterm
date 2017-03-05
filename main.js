@@ -40,29 +40,25 @@ $(document).ready(function() {
   // $("#text-input1").val("http://raw.githubusercontent.com/CPLN692-MUSA611/datasets/master/json/philadelphia-crime-snippet.json");
   // $("#text-input2").val("Lat");
   // $("#text-input3").val("Lng");
-  var DatasourceURL = "https://drive.google.com/open?id=0B44AS6GALOGhemdTc2lxQjNMUHM";
-  // $("#MapData").click(function(){
-  //   downloadCrimeData.done(function(data) {
-  //     var parsed = parseData(data);
-  //   //  console.log(parsed);
-  // //    var F_Data = filterData(parsed);
-  // //    console.log(F_Data);
-  //     var markers = makeMarkers(parsed);
-  //   //  console.log("markers");
-  //   //  console.log(markers);
-  //     plotMarkers(markers);
-  //   // removeMarkers(markers);
-  //   });
-  //   DatasourceURL = $("#text-input1").val();
-  //   LatKey = $("#text-input2").val();
-  //   LngKey = $("#text-input3").val();
-  // });
+  var DatasourceURL = "http://raw.githubusercontent.com/BowieXia/CPLN_692_Midterm/master/60647.json";
+  $("#MapData").click(function(){
+    downloadCrimeData.done(function(data) {
+      var parsed = parseData(data);
+    //  console.log(parsed);
+  //    var F_Data = filterData(parsed);
+  //    console.log(F_Data);
+      var markers = makeMarkers(parsed);
+    //  console.log("markers");
+    //  console.log(markers);
+      plotMarkers(markers);
+    // removeMarkers(markers);
+    });
+
+  });
 
   var downloadCrimeData = $.ajax(DatasourceURL);
-  console.log(downloadCrimeData);
   var parseData = function(data) {
       var parsedInfo =  JSON.parse(data);
-      console.log(parsedInfo);
       return parsedInfo;
   };
 
@@ -71,13 +67,6 @@ $(document).ready(function() {
   });
 
   console.log(downloadCrimeData);
-  // var filterData = function(data){
-  //   var filteredData = _.filter(data,function(data){
-  //     return data.District >10;
-  //   });
-  // //  console.log(filteredData);
-  //   return filteredData;
-  // };
 
 
   var makeMarkers = function(data) {
@@ -86,21 +75,9 @@ $(document).ready(function() {
     var Lat = [];
     var Lng = [];
 
-  //  console.log(_.pick(data));
-  var valMatch = function (object, LatKey) {
-  for (var key in object) {
-      if (key.includes(LatKey)) {
-          Lat.push(object[key]);
-      }
-    }
-  };
-  valMatch(data,Latkey);
-  console.log(LatKey);
-  console.log(Lat);
-  console.log(data);
       _.each(data,function(data){
-      NewMarkers.push(L.marker([data[LatKey], data[LngKey]]));
-  //    console.log(NewMarkers);
+      NewMarkers.push(L.marker([data[22], data[23]]));
+      console.log(data[22]);
     });
     return NewMarkers;
   };
