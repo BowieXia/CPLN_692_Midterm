@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+
+    <!-- Start HTML -->
+
+    <!-- End HTML -->
+
+    <!-- Start Javascript Imports -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/leaflet.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/jquery-2.2.0.js"></script>
+    <script src="js/underscore.js"></script>
+    <script src="js/leaflet.js"></script>
+    <script src="js/basicApplication.js"></script>
+    <script src="main.js"></script>
+    <!-- End Javascript Imports -->
+    <div id= "sidebar" class="sidebar">
+      <!-- =====================
+      Add elements in this space
+      ====================== -->
+      <div id="upper_sidebar" class="upper_sidebar">
+        <h1 id="main-heading">Food Inspection in Chicago</h1>
+        <label id="text-label1" for="text-input1">Data Soure URL</label>
+        <input id="text-input1" class="input-text" type="text" placeholder="URL" >
+        <br>
+        <br>
+        <label id="text-label2" for="text-input2">Latitude Key</label>
+        <input id="text-input2" class="input-text" type="text" placeholder="Latitude Key" >
+        <br>
+        <br>
+        <label id="text-label3" for="text-input3">Longitude Key</label>
+        <input id="text-input3" class="input-text" type="text" placeholder="Longitude Key" >
+        <br>
+      </div>
+      <div id="upper_sidebar" class="lower_sidebar">
+        <button id="MapData">Mapping!</button>
+        <button id="ShowTitle">Show Title!</button>
+        <!-- show charts or info -->
+      </div>
+    </div>
+    <!-- Map -->
+
+    <div id="map" class="map">
+      <button id="hide" class="hide"></button>
+      <button id="previous" class="previous"></button>
+      <button id="next" class="next"></button>
+    </div>
+
+    <!-- Javascript Imports -->
+
+
+  </body>
+</html>
