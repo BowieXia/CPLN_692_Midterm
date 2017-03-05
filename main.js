@@ -40,13 +40,16 @@ $(document).ready(function() {
   // $("#text-input1").val("http://raw.githubusercontent.com/CPLN692-MUSA611/datasets/master/json/philadelphia-crime-snippet.json");
   // $("#text-input2").val("Lat");
   // $("#text-input3").val("Lng");
+  var GroupData = [];
   var DatasourceURL = "https://raw.githubusercontent.com/BowieXia/CPLN_692_Midterm/master/FoodInspection.json";
   $("#MapData").click(function(){
     downloadCrimeData.done(function(data) {
       var parsed = parseData(data);
-      console.log(parsed);
+//      console.log(parsed);
   //    var F_Data = filterData(parsed);
   //    console.log(F_Data);
+      GroupByType(parsed);
+      console.log(GroupData);
       var markers = makeMarkers(parsed);
     //  console.log("markers");
     //  console.log(markers);
@@ -68,11 +71,15 @@ $(document).ready(function() {
 
   var CircleMarkerOptions = {
     radius: 10,
-    fillColor: "#1abc9c",
+    fillColor: "#2c3e50",
     color: "#ffffff",
     weight: 1,
     opacity: 1,
     fillOpacity: 0.8
+  };
+
+  var GroupByType = function(data) {
+     GroupData = _.groupBy(data,function(data){ return data.FIELD5;});
   };
 
   var makeMarkers = function(data) {
@@ -81,10 +88,9 @@ $(document).ready(function() {
     var Lat = [];
     var Lng = [];
 
-      _.each(data,function(data){
-        console.log(data);
-      NewMarkers.push(L.circleMarker([data.Latitude, data.Longitude],CircleMarkerOptions));
-
+    _.each(data,function(data){
+  //    console.log(data);
+      NewMarkers.push(L.circleMarker([data.FIELD15, data.FIELD16],CircleMarkerOptions));
     });
     return NewMarkers;
   };
