@@ -41,15 +41,15 @@ $(document).ready(function() {
   // $("#text-input2").val("Lat");
   // $("#text-input3").val("Lng");
   var GroupData = [];
-  var DatasourceURL = "https://raw.githubusercontent.com/BowieXia/CPLN_692_Midterm/master/FoodInspection.json";
+  var DatasourceURL = "http://raw.githubusercontent.com/BowieXia/CPLN_692_Midterm/master/FoodInspection_FIELD.json";
   $("#MapData").click(function(){
     downloadCrimeData.done(function(data) {
       var parsed = parseData(data);
-//      console.log(parsed);
+  //    console.log(parsed);
   //    var F_Data = filterData(parsed);
   //    console.log(F_Data);
       GroupByType(parsed);
-      console.log(GroupData);
+//      console.log(GroupData);
       var markers = makeMarkers(parsed);
     //  console.log("markers");
     //  console.log(markers);
@@ -85,13 +85,14 @@ $(document).ready(function() {
   var makeMarkers = function(data) {
   //    return L.marker([data.Lat,data.Lng]);
     var NewMarkers = [];
-    var Lat = [];
-    var Lng = [];
 
-    _.each(data,function(data){
-  //    console.log(data);
-      NewMarkers.push(L.circleMarker([data.FIELD15, data.FIELD16],CircleMarkerOptions));
+    _.each(data,function(feature){
+      console.log(feature);
+      if (feature.FIELD15 !== "" || feature.FIELD16 !== "") {
+        NewMarkers.push(L.circleMarker(feature.FIELD15,feature.FIELD16,CircleMarkerOptions));
+      }
     });
+    //console.log(NewMarkers);
     return NewMarkers;
   };
 
