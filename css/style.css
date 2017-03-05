@@ -29,6 +29,7 @@ body {
     width: 340px;
     top: 0px;
     bottom: auto;
+    height: 350px;
     overflow-y: auto;
     padding: 20px;
 }
@@ -39,6 +40,7 @@ body {
     width: 340px;
     top: auto;
     bottom: 0px;
+    height: 350px;
     overflow-y: auto;
     padding: 20px;
 }
@@ -88,4 +90,49 @@ body {
   background-image: url(return.png);
   background-color: transparent;
   border: none;
+}
+
+.legend {
+  position: absolute;
+  left:15px;
+  width:auto;
+  z-index: 2000;
+}
+.my-legend {
+  position: absolute;
+  top:55px;
+  left:20px;
+  background-color: #ecf0f1;
+  border:#2c3e50;
+  box-shadow: 10px 10px 5px #95a5a6;
+}
+.my-legend .legend-title {
+    width: auto;
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 90%;
+}
+.my-legend .legend-scale ul {
+    margin: 0;
+    margin-bottom: 5px;
+    padding: 0;
+    float: left;
+    list-style: none;
+}
+.my-legend .legend-scale ul li {
+    font-size: 80%;
+    list-style: none;
+    margin-left: 0;
+    line-height: 18px;
+    margin-bottom: 2px;
+}
+.my-legend ul.legend-labels li span {
+    display: block;
+    float: left;
+    height: 16px;
+    width: 30px;
+    margin-right: 5px;
+    margin-left: 0;
+    border: 2px solid #ffffff;
 }

@@ -40,23 +40,29 @@ $(document).ready(function() {
   // $("#text-input1").val("http://raw.githubusercontent.com/CPLN692-MUSA611/datasets/master/json/philadelphia-crime-snippet.json");
   // $("#text-input2").val("Lat");
   // $("#text-input3").val("Lng");
+  $('.my-legend').hide();
   var GroupData = [];
-  var DatasourceURL = "http://raw.githubusercontent.com/BowieXia/CPLN_692_Midterm/master/FoodInspection_FIELD.json";
+  var DatasourceURL = "http://raw.githubusercontent.com/BowieXia/CPLN_692_Midterm/master/FoodInspection_FIELD_Updated.json";
   $("#MapData").click(function(){
     downloadCrimeData.done(function(data) {
       var parsed = parseData(data);
   //    console.log(parsed);
   //    var F_Data = filterData(parsed);
   //    console.log(F_Data);
+      // var featureGroup = L.geoJson(parsed, {
+      //   style: myStyle,
+      //   filter: myFilter
+      // }).addTo(map);
+      // console.log(featureGroup);
       GroupByType(parsed);
-//      console.log(GroupData);
+      console.log(GroupData);
       var markers = makeMarkers(parsed);
     //  console.log("markers");
     //  console.log(markers);
       plotMarkers(markers);
     // removeMarkers(markers);
     });
-
+    $('.my-legend').show();
   });
 
   var downloadCrimeData = $.ajax(DatasourceURL);
@@ -68,14 +74,72 @@ $(document).ready(function() {
   downloadCrimeData.done(function(data){
      parseData(data);
   });
-
   var CircleMarkerOptions = {
     radius: 10,
-    fillColor: "#2c3e50",
+    fillColor: "#95a5a6",
     color: "#ffffff",
-    weight: 1,
+    weight: 2,
     opacity: 1,
     fillOpacity: 0.8
+  };
+
+  var BakeryMarkerOptions = {
+    radius: 10,
+    fillColor: "#1abc9c",
+    color: "#ffffff",
+    weight: 2,
+    opacity: 1,
+    fillOpacity: 0.8
+  };
+  var GroceryMarkerOptions = {
+    radius: 10,
+    fillColor: "#3498db",
+    color: "#ffffff",
+    weight: 2,
+    opacity: 1,
+    fillOpacity: 0.8
+  };
+  var LiquorMarkerOptions = {
+    radius: 10,
+    fillColor: "#9b59b6",
+    color: "#ffffff",
+    weight: 2,
+    opacity: 1,
+    fillOpacity: 0.8
+  };
+  var TRUCKMarkerOptions = {
+    radius: 10,
+    fillColor: "#34495e",
+    color: "#ffffff",
+    weight: 2,
+    opacity: 1,
+    fillOpacity: 0.8,
+  };
+  var RESTAURANTMarkerOptions = {
+    radius: 10,
+    fillColor: "#e67e22",
+    color: "#ffffff",
+    weight: 2,
+    opacity: 1,
+    fillOpacity: 0.8
+  };
+
+  var myStyle = function(feature) {
+  switch (feature.FIELD5) {
+      case 'Bakery': return {fillColor: "#1abc9c"};
+      case 'COFFEE SHOP':   return {fillColor: "#3498db"};
+      case 'Liquor': return {fillColor: "#9b59b6"};
+      case 'MOBILE FOOD TRUCK':   return {fillColor: "#000000"};
+      case 'RESTAURANT': return {fillColor: "#e67e22"};
+  }
+  //return {color: "#000000"};
+  };
+
+  var myFilter = function(feature) {
+  // if (feature.properties.COLLDAY !== " ") {
+  //   return feature;
+  // }
+  //return true;
   };
 
   var GroupByType = function(data) {
@@ -87,9 +151,18 @@ $(document).ready(function() {
     var NewMarkers = [];
 
     _.each(data,function(feature){
-      console.log(feature);
+  //    console.log(feature);
       if (feature.FIELD15 !== "" || feature.FIELD16 !== "") {
-        NewMarkers.push(L.circleMarker(feature.FIELD15,feature.FIELD16,CircleMarkerOptions));
+
+        switch (feature.FIELD5) {
+            case 'Bakery': return NewMarkers.push(L.circleMarker([Number(feature.FIELD15),Number(feature.FIELD16)],BakeryMarkerOptions));
+            case 'Grocery Store':   return NewMarkers.push(L.circleMarker([Number(feature.FIELD15),Number(feature.FIELD16)],GroceryMarkerOptions));
+            case 'Liquor': return NewMarkers.push(L.circleMarker([Number(feature.FIELD15),Number(feature.FIELD16)],LiquorMarkerOptions));
+            case 'MOBILE FOOD TRUCK':  return NewMarkers.push(L.circleMarker([Number(feature.FIELD15),Number(feature.FIELD16)],TRUCKMarkerOptions));
+            case 'Restaurant': return NewMarkers.push(L.circleMarker([Number(feature.FIELD15),Number(feature.FIELD16)],RESTAURANTMarkerOptions));
+            default: return NewMarkers.push(L.circleMarker([Number(feature.FIELD15),Number(feature.FIELD16)],CircleMarkerOptions));
+        }
+        console.log(feature);
       }
     });
     //console.log(NewMarkers);
