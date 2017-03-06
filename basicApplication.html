@@ -12,33 +12,39 @@
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/leaflet.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="L.Control.MousePosition.css" />
+    <link rel="stylesheet" href="leaflet-areaselect.css" />
     <script src="js/jquery-2.2.0.js"></script>
     <script src="js/underscore.js"></script>
     <script src="js/leaflet.js"></script>
     <script src="js/basicApplication.js"></script>
     <script src="main.js"></script>
+    <script src="L.Control.MousePosition.js"></script>
+    <script src="leaflet-areaselect.js"></script>
     <!-- End Javascript Imports -->
     <div id= "sidebar" class="sidebar">
       <!-- =====================
       Add elements in this space
       ====================== -->
       <div id="upper_sidebar" class="upper_sidebar">
-        <h1 id="main-heading">Food Inspection in Chicago</h1>
-        <label id="text-label1" for="text-input1">Data Soure URL</label>
-        <input id="text-input1" class="input-text" type="text" placeholder="URL" >
-        <br>
-        <br>
-        <label id="text-label2" for="text-input2">Latitude Key</label>
-        <input id="text-input2" class="input-text" type="text" placeholder="Latitude Key" >
-        <br>
-        <br>
-        <label id="text-label3" for="text-input3">Longitude Key</label>
-        <input id="text-input3" class="input-text" type="text" placeholder="Longitude Key" >
-        <br>
+        <h1 id="main-heading" class="Web_Head">Food Inspection <br /> Chicago</h1>
+        <button id="ShowInfo" class="ShowInfo" style="display: none">Show all info tabs</button>
+        <h3 id = "Narratives" class="Narratives" type="text">Press button to show all the food inspections in the selecting zipcode area(60649)</h3>
+        <h2 id="Inspection_Year" class="Inspection_Year" style="display: none">The Year of Inspection: <h2 id="InsYear" class="InsYear"></h2></h2>
       </div>
-      <div id="upper_sidebar" class="lower_sidebar">
+      <div id="lower_sidebar" class="lower_sidebar">
+        <div id ="Selector" class="Selector" style="display: none">
+          <label id="RiskFilter" class="RiskFilter">Risk Filter</label>
+          <select name="dropdown" id="dropdown" class = "dropdown" size=1>
+              <option value="1">High Risk</option>
+              <option value="2">Medium Risk</option>
+              <option value="3">Low Risk</option>
+          </select>​
+        </div>
+        <div id = "SideBar_Info" class = "SideBar_Info" style="display: none"></div>
         <button id="MapData" class="ButtonMap">Mapping All the Restaurants!</button>
-        <button id="ButtonClassify" class="ButtonClassify">Classify the Spots</button>
+        <button id="ButtonClassify" class="ButtonClassify" style="display: none">Classify the Spots</button>
+        <button id="DisplayRe" class="DisplayRe" style="display: none">Display Inspection Results</button>
         <div class='my-legend'style="display: none">
          <div class='legend-title'>Legend of Restaurants</div>
           <div class='legend-scale'>
@@ -60,7 +66,10 @@
     <div id="map" class="map">
       <button id="hide" class="hide"></button>
       <button id="reset" class="reset"></button>
+      <button id="DrawRect" class="DrawRect">D</button>
+      <button id="RemoveRect" class="RemoveRect">R</button>
       <button id="previous" class="previous"></button>
+      <button id="PageNum" class="PageNum"></button>
       <button id="next" class="next"></button>
       <button id="return" class="return" style="display: none"></button>
     </div>
