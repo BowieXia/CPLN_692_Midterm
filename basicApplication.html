@@ -37,10 +37,10 @@
         <br>
       </div>
       <div id="upper_sidebar" class="lower_sidebar">
-        <button id="MapData">Mapping!</button>
-        <button id="ShowTitle">Show Title!</button>
+        <button id="MapData" class="ButtonMap">Mapping All the Restaurants!</button>
+        <button id="ButtonClassify" class="ButtonClassify">Classify the Spots</button>
         <div class='my-legend'style="display: none">
-         <div class='legend-title'>Legend</div>
+         <div class='legend-title'>Legend of Restaurants</div>
           <div class='legend-scale'>
             <ul class='legend-labels'>
               <li><span style='background:#1abc9c;'></span>Bakery</li>
@@ -48,7 +48,7 @@
               <li><span style='background:#9b59b6;'></span>Liquor</li>
               <li><span style='background:#34495e;'></span>MOBILE FOOD TRUCK</li>
               <li><span style='background:#e67e22;'></span>Restaurant</li>
-              <li><span style='background:#95a5a6;'></span>Else</li>
+              <li><span style='background:#95a5a6;'></span>Others</li>
             </ul>
           </div>
         </div>
@@ -59,8 +59,10 @@
 
     <div id="map" class="map">
       <button id="hide" class="hide"></button>
+      <button id="reset" class="reset"></button>
       <button id="previous" class="previous"></button>
       <button id="next" class="next"></button>
+      <button id="return" class="return" style="display: none"></button>
     </div>
 
     <!-- Javascript Imports -->

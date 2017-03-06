@@ -12,6 +12,32 @@ body {
     top: 0;
 }
 
+.ButtonMap {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  background-color: #ffffff;
+  border-width: thick;
+  border-color:#f39c12;
+  border-radius: 5px;
+  font-style: italic;
+  font-weight: bold;
+  font-color: blue;
+}
+
+.ButtonClassify {
+  position: absolute;
+  top: 45px;
+  left: 15px;
+  background-color: #ffffff;
+  border-width: thick;
+  border-color:#f39c12;
+  border-radius: 5px;
+  font-style: italic;
+  font-weight: bold;
+  font-color: blue;
+}
+
 .sidebar {
     position: absolute;
     left: 0px;
@@ -53,6 +79,17 @@ body {
   height: 33px;
   z-index: 1000;
   background-image: url(veye.png);
+  background-color: white;
+}
+
+.reset {
+  position: absolute;;
+  left:6px;
+  top: 128px;
+  width: 36px;
+  height: 35px;
+  z-index: 1000;
+  background-image: url(reset.png);
   background-color: white;
 }
 
@@ -100,11 +137,12 @@ body {
 }
 .my-legend {
   position: absolute;
-  top:55px;
+  top:90px;
   left:20px;
-  background-color: #ecf0f1;
-  border:#2c3e50;
-  box-shadow: 10px 10px 5px #95a5a6;
+  background-color: #ffffff;
+  border-width: thick;
+  border-color:#f39c12;
+  border-radius: 5px;
 }
 .my-legend .legend-title {
     width: auto;

@@ -34,12 +34,16 @@
        }
        var one = justOne();
 ===================== */
+var slideNumber = 1;
 
 // We set this to HTTP to prevent 'CORS' issues
 $(document).ready(function() {
   // $("#text-input1").val("http://raw.githubusercontent.com/CPLN692-MUSA611/datasets/master/json/philadelphia-crime-snippet.json");
   // $("#text-input2").val("Lat");
   // $("#text-input3").val("Lng");
+  if (slideNumber === 1) {
+    $('.previous').hide();
+  }
   $('.my-legend').hide();
   var GroupData = [];
   var DatasourceURL = "http://raw.githubusercontent.com/BowieXia/CPLN_692_Midterm/master/FoodInspection_FIELD_Updated.json";
@@ -62,9 +66,63 @@ $(document).ready(function() {
       plotMarkers(markers);
     // removeMarkers(markers);
     });
+    $('.my-legend').hide();
+  });
+
+  //classify spots click function
+  $("#ButtonClassify").click(function(){
+    downloadCrimeData.done(function(data) {
+      var parsed = parseData(data);
+      GroupByType(parsed);
+      var markers = makeClassifiedMarkers(parsed);
+      plotMarkers(markers);
+    });
     $('.my-legend').show();
   });
 
+  //reset view click function
+  $('#reset').click(function(){
+    ResetView();
+  });
+
+  //Previous, next and return click function
+
+  $('#return').click(function(){
+    slideNumber = 1;
+    $('.previous').hide();
+    console.log(slideNumber);
+    $('.next').show();
+    $('.return').hide();
+  });
+
+  $('#previous').click(function(){
+    slideNumber -= 1;
+    console.log(slideNumber);
+    if (slideNumber === 1) {
+      $('.previous').hide();
+    }
+    if (slideNumber !== 5) {
+      $('.return').hide();
+      $('.next').show();
+    }
+  });
+
+  $('#next').click(function(){
+    slideNumber += 1;
+    $('.previous').show();
+    console.log(slideNumber);
+    if (slideNumber === 5) {
+      $('.next').hide();
+      $('.return').show();
+    }
+  });
+
+
+  //reset view function
+  var ResetView = function(){
+    map.setView([41.921271, -87.702531],14);
+  };
+  //parse data function
   var downloadCrimeData = $.ajax(DatasourceURL);
   var parseData = function(data) {
       var parsedInfo =  JSON.parse(data);
@@ -74,6 +132,7 @@ $(document).ready(function() {
   downloadCrimeData.done(function(data){
      parseData(data);
   });
+  //different circlemarker options
   var CircleMarkerOptions = {
     radius: 10,
     fillColor: "#95a5a6",
@@ -124,29 +183,42 @@ $(document).ready(function() {
     fillOpacity: 0.8
   };
 
-  var myStyle = function(feature) {
-  switch (feature.FIELD5) {
-      case 'Bakery': return {fillColor: "#1abc9c"};
-      case 'COFFEE SHOP':   return {fillColor: "#3498db"};
-      case 'Liquor': return {fillColor: "#9b59b6"};
-      case 'MOBILE FOOD TRUCK':   return {fillColor: "#000000"};
-      case 'RESTAURANT': return {fillColor: "#e67e22"};
-  }
-  //return {color: "#000000"};
-  };
-
-  var myFilter = function(feature) {
-  // if (feature.properties.COLLDAY !== " ") {
-  //   return feature;
+  // var myStyle = function(feature) {
+  // switch (feature.FIELD5) {
+  //     case 'Bakery': return {fillColor: "#1abc9c"};
+  //     case 'COFFEE SHOP':   return {fillColor: "#3498db"};
+  //     case 'Liquor': return {fillColor: "#9b59b6"};
+  //     case 'MOBILE FOOD TRUCK':   return {fillColor: "#000000"};
+  //     case 'RESTAURANT': return {fillColor: "#e67e22"};
   // }
-  //return true;
-  };
+  // //return {color: "#000000"};
+  // };
+  //
+  // var myFilter = function(feature) {
+  // // if (feature.properties.COLLDAY !== " ") {
+  // //   return feature;
+  // // }
+  // //return true;
+  // };
 
   var GroupByType = function(data) {
      GroupData = _.groupBy(data,function(data){ return data.FIELD5;});
   };
-
+  //Original markers
   var makeMarkers = function(data) {
+  //    return L.marker([data.Lat,data.Lng]);
+    var NewMarkers = [];
+
+    _.each(data,function(feature){
+
+      if (feature.FIELD15 !== "" || feature.FIELD16 !== "") {
+        NewMarkers.push(L.circleMarker([Number(feature.FIELD15),Number(feature.FIELD16)],CircleMarkerOptions));
+      }
+    });
+    return NewMarkers;
+  };
+  //Classifies markers
+  var makeClassifiedMarkers = function(data) {
   //    return L.marker([data.Lat,data.Lng]);
     var NewMarkers = [];
 
@@ -169,6 +241,7 @@ $(document).ready(function() {
     return NewMarkers;
   };
 
+  //Plot markers
   var plotMarkers = function(markers) {
   //  markers.addTo(map);
     _.each(markers,function(markers){
@@ -176,38 +249,12 @@ $(document).ready(function() {
     });
   };
 
-
-  /* =====================
-    Define the function removeData so that it clears the markers you've written
-    from the map. You'll know you've succeeded when the markers that were
-    previously displayed are immediately removed from the map.
-
-    In Leaflet, the syntax for removing one specific marker looks like this:
-
-    map.removeLayer(marker);
-
-    In real applications, this will typically happen in response to changes to the
-    user's input.
-  ===================== */
-
   var removeMarkers = function(markers) {
   //  map.removeLayer(markers);
     _.each(markers,function(markers){
       map.removeLayer(markers);
     });
   };
-
-  /* =====================
-    Optional, stretch goal
-    Write the necessary code (however you can) to plot a filtered down version of
-    the downloaded and parsed data.
-
-    Note: You can add or remove from the code at the bottom of this file.
-  ===================== */
-
-  /* =====================
-   Leaflet setup - feel free to ignore this
-  ===================== */
 
   var map = L.map('map', {
     center: [41.921271, -87.702531],
@@ -222,7 +269,7 @@ $(document).ready(function() {
   }).addTo(map);
 
   var hiden = false;
-
+  //Hiding sidebar button click function
   $('button#hide').click(
     function(){
       hiden = !hiden;
@@ -237,15 +284,6 @@ $(document).ready(function() {
       }
     }
   );
-
-  /* =====================
-   CODE EXECUTED HERE!
-  ===================== */
-
-
-
-
-
 
 
 });
